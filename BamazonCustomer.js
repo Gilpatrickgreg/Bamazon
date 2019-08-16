@@ -1,6 +1,5 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-const {table} = require('table');
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -31,9 +30,7 @@ function startBamazon() {
         console.log("--------------  BAMAZON  -------------\n");
         console.table(res);
 
-    //     for (var i = 0; i < res.length; i++) {
-    //       console.log(res[i].item_id + "  |  " + res[i].product_name + "  |  " + res[i].department_name + "  |  " + res[i].price + "  |  " + res[i].stock_quantity);
-    //     }
+    
         console.log("\n-----------------------------------\r");
 
         askQuestions(res);
@@ -47,12 +44,12 @@ function startBamazon() {
           message: "What is the item id you would like to buy?",
           type: "input",
           name: "itemID"
-        //   validate: /^\d+$/
+        
       },{
           message: "How many units would you like to buy?",
           type: "input",
           name: "quantity"
-        //   validate: validateName
+   
       }
       
       ])
@@ -60,13 +57,6 @@ function startBamazon() {
 
       console.log(answer.quantity)
       console.log(res);
-      // var query = "SELECT item_id, stock_quantity FROM products WHERE ?";
-      // connection.query(query, { itemID: res.item_id, quantity: products.stock_quantity }, function(err, res) {
-      //     if (err) throw err;
-      //     for (var i = 0; i < res.length; i++) {
-      //         console.log("Item ID: " + res[i].item_id + " || Units: " + res[i].stock_quantity);
-      //   }
-      // //   runSearch();
-      // });
+     
     });
 };
