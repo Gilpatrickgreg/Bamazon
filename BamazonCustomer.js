@@ -48,15 +48,40 @@ function startBamazon() {
       },{
           message: "How many units would you like to buy?",
           type: "input",
-          name: "quantity"
+          name: "buyUnits"
    
       }
       
       ])
-    .then(function(answer) {
 
-      console.log(answer.quantity)
-      console.log(res);
-     
-    });
+    .then(function(answer) {
+        console.log("\n");
+        console.log("You purchased " + answer.buyUnits + " units from item # " + answer.itemID + ".\n");
+        updateProduct(answer);
+
+          });
+
+          function updateProduct(answer) {
+            console.log("Updating units...\n");
+            var query = connection.query(
+          
+              "UPDATE products SET ? WHERE ?",
+              [
+                { 
+                  stock_quantity: stock_quantity - answer.buyUnits 
+                },
+                { 
+                  item_id: answer.itemID 
+                }
+              ],
+              function(err, res) {
+                connection.query("SELECT * FROM products", function(err, res) {
+                  if (err) throw err;
+                    console.log("----------------------------------  BAMAZON  ----------------------------------\n");
+                    console.table(res);
+                    askQuestions(res);
+                });
+              }
+            );
+          }
 };
